@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 public class Lotto {
 
@@ -38,29 +37,25 @@ public class Lotto {
         }
     }
 
-    public List<LottoNumber> getNumbers() {
-        return numbers.stream().collect(Collectors.toUnmodifiableList());
-    }
-
     public int matchCount(Lotto winningLotto) {
         int count = 0;
 
-        for (LottoNumber number : winningLotto.getNumbers()) {
-            count = plusCountIfContains(number, count);
+        for (LottoNumber number : numbers) {
+            count = plusCountIfContains(winningLotto, number, count);
         }
 
         return count;
     }
 
-    private int plusCountIfContains(LottoNumber number, int count) {
-        if (numbers.contains(number)) {
+    private int plusCountIfContains(Lotto lotto, LottoNumber number, int count) {
+        if (lotto.contains(number)) {
             return count + 1;
         }
         return count;
     }
 
-    public boolean contains(LottoNumber bonusNumber) {
-        return this.numbers.contains(bonusNumber);
+    public boolean contains(LottoNumber lottoNumber) {
+        return this.numbers.contains(lottoNumber);
     }
 
     @Override
